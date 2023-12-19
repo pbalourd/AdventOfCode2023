@@ -25,7 +25,7 @@ fun main(args: Array<String>) {
     val grid = input.map { line -> line.toList() }
 
     val loop = mutableListOf<Pos>()
-    loop.add(Pos(sY, sX))
+    loop.add(Pos(sY,sX))
     loop.add(findStartDirection(sY, sX, grid))
 
 
@@ -36,6 +36,21 @@ fun main(args: Array<String>) {
     }
     println(loop.size / 2)
     // Solution 6757
+
+    var count = 0
+    for (y in grid.indices) {
+        for (x in grid[0].indices) {
+            if (Pos(y, x) !in loop) {
+                var walls = 0
+                for (k in 0..<x) {
+                    if (grid[y][k] !in "L-JS" && Pos(y, k) in loop) walls++
+                }
+                if (walls % 2 == 1) count++
+            }
+        }
+    }
+    println(count)
+    // Solution 523
 }
 
 fun findStartDirection(sY: Int, sX: Int, grid: List<List<Char>>): Pos {
